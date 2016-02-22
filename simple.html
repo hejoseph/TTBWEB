@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+<script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="js/javascript.js"></script>
+
+<script type='text/javascript'>
+  // Connecting to ROS
+  // -----------------
+
+  	
+
+  // var ros = new ROSLIB.Ros({
+  //   url : 'ws://localhost:9090'
+  // });
+
+  // ros.on('connection', function() {
+  //   console.log('Connected to websocket server.');
+  // });
+
+  // ros.on('error', function(error) {
+  //   console.log('Error connecting to websocket server: ', error);
+  // });
+
+  // ros.on('close', function() {
+  //   console.log('Connection to websocket server closed.');
+  // });
+
+  
+
+  // Subscribing to a Topic
+  // ----------------------
+
+  // var listener = new ROSLIB.Topic({
+  //   ros : ros,
+  //   name : '/listener',
+  //   messageType : 'std_msgs/String'
+  // });
+
+  // listener.subscribe(function(message) {
+  //   console.log('Received message on ' + listener.name + ': ' + message.data);
+  //   listener.unsubscribe();
+  // });
+
+  // Calling a service
+  // -----------------
+
+  // var addTwoIntsClient = new ROSLIB.Service({
+  //   ros : ros,
+  //   name : '/add_two_ints',
+  //   serviceType : 'rospy_tutorials/AddTwoInts'
+  // });
+
+  // var request = new ROSLIB.ServiceRequest({
+  //   a : 1,
+  //   b : 2
+  // });
+
+  // addTwoIntsClient.callService(request, function(result) {
+  //   console.log('Result for service call on '
+  //     + addTwoIntsClient.name
+  //     + ': '
+  //     + result.sum);
+  // });
+
+  // Getting and setting a param value
+  // ---------------------------------
+
+  // ros.getParams(function(params) {
+  //   console.log(params);
+  // });
+
+  // var maxVelX = new ROSLIB.Param({
+  //   ros : ros,
+  //   name : 'max_vel_y'
+  // });
+
+  // maxVelX.set(0.8);
+  // maxVelX.get(function(value) {
+  //   console.log('MAX VAL: ' + value);
+  // });
+</script>
+</head>
+
+<body>
+<div class="container">
+  <div class="row">
+  <div class="col-sm-6">
+    <h1>Stage simulator</h1>
+    <!-- <p>Check your Web Console for output.</p> -->
+    <p>Status : </p>
+    <p id="result">Connection closed</p>
+      <!-- <button id="sub">Subscribe Topic</button> -->
+      <!-- <button id="pub">Publish Topic</button> -->
+      <!-- <br> -->
+      <div class="teleop">
+        <button class="button glyphicon glyphicon-arrow-up" id="up"></button>
+        <button class="button glyphicon glyphicon-arrow-down" id="down"></button>
+        <button class="button glyphicon glyphicon-arrow-left" id="left"></button>
+        <button class="button glyphicon glyphicon-arrow-right" id="right"></button>
+      </div>
+
+    <div class="coordo">
+      <input id="x" type="text" name="" value="" placeholder="X">
+      <input id="y" type="text" name="" value="" placeholder="Y">
+      <button id="submit">Submit</button>
+    </div>
+
+    <div class="drink">
+      <button id="submit">Submit</button>
+    </div>
+
+    <div class="drink">
+      <button id="calldrink">Bring Drink</button>
+    </div>
+    <br>
+    <h1>Command Client</h1>
+    <br>
+    <div class="coordo">
+      <input id='name' type="text" name="" value="" placeholder="Nom">
+      <input id="posx" type="text" name="" value="" placeholder="X">
+      <input id="posy" type="text" name="" value="" placeholder="Y">
+      <input id="nb_item" type="text" name="" value="" placeholder="Nombre de boissons">
+      <button id="command">Command drink</button>
+    </div>
+
+  </div>
+  <div class="col-sm-6">
+    <h1>
+    Coffee Agent
+    </h1>
+    <div><button class="button" id="validate_drink">Validate Drink</button> At base : <span id="bot_at_base" >No</span></div>
+    <h3>People who need a drink :</h3>
+    <div id="waiting_list">Nobody for the moment ...</div>
+  </div>  
+  </div>
+</body>
+</html>
