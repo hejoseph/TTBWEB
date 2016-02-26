@@ -1,5 +1,5 @@
 var l = "localhost";
-var r = "192.168.150.10"
+var r = "192.168.150.8"
 // alert('hey');
 var ros = new ROSLIB.Ros({
 			    url : 'ws://'+r+':9090'
@@ -94,6 +94,43 @@ var listener = new ROSLIB.Topic({
   });
 
 
+var listener = new ROSLIB.Topic({
+    ros : ros,
+    name : '/laptop_charge',
+    messageType : 'smart_battery_msgs/SmartBatteryStatus'
+  });
+
+  listener.subscribe(function(message) {
+    // console.log('Received message on ' + listener.name + ': ' + JSON.stringify(message));
+    var string_html ='<span id="battery">';
+    string_html+=""+message.percentage;
+    string_html+="</span>";
+    $('#battery').replaceWith(string_html);
+    string_html="<span id='charge'>"+message.charge;
+    string_html+="</span>";
+    $('#charge').replaceWith(string_html);
+    // listener.unsubscribe();
+  });
+
+var listener = new ROSLIB.Topic({
+    ros : ros,
+    name : '/service_availibility',
+    messageType : 'std_msgs/Int8'
+  });
+  listener.subscribe(function(message) {
+    console.log('Received message on ' + listener.name + ': ' + JSON.stringify(message));
+    var string_html ='<span id="service">';
+    if(message.data==1){
+    	string_html+="Available";
+    } else {
+    	string_html+="Unavailable";
+    }
+    string_html+="</span>";
+    $('#service').replaceWith(string_html);
+  });
+
+
+
 function load_waiting_list(){
 	var listener = new ROSLIB.Topic({
     ros : ros,
@@ -142,14 +179,17 @@ $(document).ready(function(){
   $('#validate_drink').click(function(){
   		var pub = new ROSLIB.Topic({
 			    ros : ros,
-			    name : 'valid_pressed',
-			    messageType : 'std_msgs/Int8'
+			    name : '/mobile_base/events/button',
+			    messageType : 'kobuki_msgs/ButtonEvent'
 			  });
 		var pressed = new ROSLIB.Message({
-			    data : 1
+			    button : 2,
+			    state : 1
 			  });
 			  pub.publish(pressed);
   });
+
+  
 
 
 	$('#command').click(function(){
